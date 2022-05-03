@@ -14,14 +14,14 @@
   <div class="row">
     <div class="col-12 text-center">
       <h2 class=" mt-3 mb-4">Generador de ID</h2>
-      <button class="border-0 rounded generateButton px-4" (click)="getRandomArbitrary(1,10)">Generar</button>
+      <button class="border-0 rounded generateButton px-4" (click)="getRandomArbitrary(1,1000)">Generar</button>
       <h3 *ngIf="newId !== 0" class="my-3">Tu ID es: <span>{{newId}}</span></h3>
       <h5 *ngIf="status === false">El ID generado ya existe, genera otro ID</h5>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
-      <div  *ngFor="let item of Participantes" id="list">{{item.id_generado}}</div>
+      <!-- <div  *ngFor="let item of Participantes" id="list">{{item.id_generado}}</div> -->
     </div>
   </div>
 </div>
