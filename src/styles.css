@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #26282c;
+}
+h2, h3, h5, #list {
+  color: #f9f9f9eb;
+}
+h5 {
+  font-style: italic;
+  font-size: 18px;
+}
+button {
+  background-color: #36A08E;
+  color: #f9f9f9eb;
+  font-size: 30px;
+}
