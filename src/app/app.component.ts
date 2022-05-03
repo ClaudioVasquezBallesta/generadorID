@@ -18,8 +18,9 @@ export class AppComponent implements OnInit {
   public Participantes: IdGenerator[];
   private newParticipante: IdGenerator;
   public status: boolean = true;
+  public localStoreData: number;
 
-  constructor(private idGeneratorService: IdGeneratorService){}
+  constructor(private idGeneratorService: IdGeneratorService) { }
 
   ngOnInit(): void {
     this.idGeneratorService.getIdGenerated().subscribe((res) => {
@@ -29,33 +30,40 @@ export class AppComponent implements OnInit {
         }
       });
     });
+    this.localStoreData = parseInt(this.getLocalStore());
+
   }
 
-  getRandomArbitrary(min:number, max:number) {
-    this.newId = Math.trunc(Math.random() * (max - min) + min);
+  getRandomArbitrary(min: number, max: number) {
 
-    if (this.Participantes.some(e => e.id_generado === this.newId)) {
-      console.log("El ID ya existe");
-      this.status = false;
-    }else {
-      this.newParticipante = {
-        "id_generado": this.newId
+
+    if (this.localStoreData >= 0) {
+      console.log("Ya tiene un ID generado");
+    } else {
+      this.newId = Math.trunc(Math.random() * (max - min) + min);
+      if (this.Participantes.some(e => e.id_generado === this.newId)) {
+        console.log("El ID ya existe");
+        this.status = false;
+      } else {
+        this.newParticipante = {
+          "id_generado": this.newId
+        }
+        this.idGeneratorService.createIdGenerated(this.newParticipante);
+        this.setLocalStore(this.newParticipante.id_generado);
+        this.localStoreData = parseInt(this.getLocalStore());
+        console.log("nuevo localstore" + this.localStoreData);
+        this.status = true;
       }
-      this.idGeneratorService.createIdGenerated(this.newParticipante);
-      this.status = true;
     }
 
 
-    // if (this.lista_id_generados.includes(this.newId)) {
+  }
 
-    //   this.getRandomArbitrary(1,100);
-    // }else {
-    //   this.lista_id_generados.push(this.newId);
-    //   this.newParticipante = {
-    //     "id_generado": this.newId
-    //   }
-    // }
-
+  setLocalStore(id) {
+    localStorage.setItem("id_participante", id);
+  }
+  getLocalStore() {
+    return localStorage.getItem("id_participante");
   }
 
 
